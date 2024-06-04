@@ -1,6 +1,5 @@
 package pim.dos.cria;
 import java.util.Scanner;
-import 
 public class PIMDosCria {
         public static void main(String[] args) {
     Scanner ler = new Scanner(System.in);
@@ -15,7 +14,7 @@ public class PIMDosCria {
     System.out.println("Informe seu CPF: ");
     cpf = ler.next();
     
-            String cpf = "123.456.789-09"; // Exemplo de CPF
+            cpf = "123.456.789-09"; // Exemplo de CPF
             if (ValidadorCPF.validarCPF(cpf)) {
                 System.out.println("CPF válido!");
             } else {
