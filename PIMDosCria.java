@@ -4,44 +4,67 @@ public class PIMDosCria {
         public static void main(String[] args) {
     Scanner ler = new Scanner(System.in);
     String cpf;
-    int contador = 1, opcao = 0, opcaoValida = 0;
-    int platA [][] = new int [5][5];
-    int platB [][] = new int[10][10];
-    int frisas [][] = new int [6][5];
-    int camarotes [][] = new int[5][10];
-    int balcaoNobre [][] = new int[10][5];
-
-    System.out.println("Informe seu CPF: ");
-    cpf = ler.next();
+    int comprar = 0, imprimir = 0, estatistica = 0, sair = 0, pecas[][] = new int[3][3], contador = 1, opcao = 0, opcaoValida = 0, platA [][] = new int [5][5], platB [][] = new int[10][10], frisas [][] = new int [6][5], camarotes [][] = new int[5][10], balcaoNobre [][] = new int[10][5];
     
-    cpf = "123.456.789-09"; // Exemplo de CPF
-            if (ValidadorCPF.validarCPF(cpf)) {
-                System.out.println("CPF válido!");
-            } else {
-                System.out.println("CPF inválido!");
-                return;
-            }
+    /* 
+     * Realizar leitura do CPF e validação dele aqui posteriormente
+     */
+    
             System.out.printf("Selecione uma opção:\n1. Comprar ingresso. \n2. Imprimir ingresso. \n3. Estatística de Vendas.\n4. Sair do programa\n\n");
+            opcao = ler.nextInt();
+            while(opcaoValida == 0)
+            {
+                switch(opcao)
+                {
+                case 1:
+                    System.out.println("Em qual período você deseja comprar o ingresso? \n1. Manhã \n2. Tarde \n3.Noite \n");
+                    opcaoValida = 1;
+                    comprar++;
+                    break;
+                case 2:
+                    System.out.println("Imprimir ingresso");
+                    opcaoValida = 2;
+                    imprimir++;
+                    break;
+                case 3:
+                    System.out.println("Estatísticas de Venda");
+                    opcaoValida = 3;
+                    estatistica++;
+                    break;
+                case 4:
+                    System.out.println("Sair do programa.");
+                    opcaoValida = 4;
+                    sair++;
+                default:
+                    System.out.println("Opção inválida, favor selecione outra.");
+                    opcaoValida = 0;
+                    break;
+            }   
+        }
+            for(int peca = 0; peca < 3; peca++)
+            {
+                for(int horario = 0; horario < 3; horario++)
+                {
+                    // pecas[peca][horario] = ;1
+                    
+                }
 
-            
-            System.out.println("Em qual período você deseja comprar o ingresso? \n1. Manhã \n2. Tarde \n3.Noite \n");
-            
+            }
 
-            
-            while(opcaoValida == 0){
-                opcao = ler.nextInt();
+            opcaoValida = 0;
+            if(comprar > 0){
+                do{
+            opcao = ler.nextInt();
             switch(opcao)
             {
                 case 1: 
-                    System.out.println("Teremos 3 peças pela parte da manhã neste dia! Escolha o horário que mais lhe agrada: ");
-                    System.out.printf("1. 07:00\n2. 09:00\n3. 11:00\n");
-                    opcao = 0;
+                    System.out.printf("Teremos 3 peças pela parte da manhã neste dia! Escolha o horário de preferência \n1. 07:00 \n2. 09:00 \n3. 11:00\n");
                     opcao = ler.nextInt();
                     opcaoValida = 1;
                     break;
                 case 2: 
-                    System.out.println("Teremos 3 peças pela parte da tarde neste dia! Escolha o horário que mais lhe agrada: ");
-                    System.out.printf("1. 13:00\n2. 15:00\n3. 17:00\n");
+                    System.out.println("Teremos 3 peças pela parte da tarde neste dia! Escolha o horário de preferência para o início da peça. ");
+                    System.out.printf("1. 13:00 \n2. 15:00\n3. 17:00\n");
                     opcaoValida = 2;
                     break;
                 case 3:
@@ -54,15 +77,13 @@ public class PIMDosCria {
                     opcaoValida = 0;
                     break;
             }
-            }
+            }while(opcaoValida == 0);
+        }
+
+        opcaoValida = 0;
+
+
             
-    
-
-
-
-
-
-
     
     // Preenche a matriz 5x5 platA com elementos de 1 à 25, em 5 fileiras e 5 colunas e as exibe no final
     System.out.println("Platéia A: ");
