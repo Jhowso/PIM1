@@ -3,13 +3,11 @@ import java.util.Scanner;
 public class PIMDosCria {
         public static void main(String[] args) {
     Scanner ler = new Scanner(System.in);
-    String cpf, opcao, horario, secao, frisaString, assentoA, assentoB, assentoCamarote, assentoFrisa, assentoBalcao;
-    boolean comprar = false, opcaoInvalida = false, sair = false, estatistica = false, imprimir = false, platAOcupado[][][] = new boolean [9][5][5], platBOcupado[][][] = new boolean[9][10][10], camarotesOcupado[][][] = new boolean[9][5][10], frisasOcupado[][][] = new boolean[9][6][5], balcaoNobreOcupado[][][] = new boolean[9][10][5];
-    int opcaoInt, secaoInt, assentoAint, assentoBint, assentoCamaroteint, assentoFrisaint, assentoBalcaoint, contador = 1, dia [] = new int [3], horarioInt, camaroteInt, frisaInt, colunaA, linhaA, linhaB, colunaB, camaroteEscolhido, posicaoEscolhida, posicaoFrisa, frisaEscolhida, linhaBalcao, colunaBalcao;
-    int platA [][][] = new int [9][5][5], platB [][][] = new int[9][10][10], frisas [][][] = new int [9][6][5], camarotes [][][] = new int[9][5][10], balcaoNobre [][][] = new int[9][10][5];
-    /* 
-     * Realizar leitura do CPF e validação dele aqui posteriormente
-     */
+    String cpf, opcao, horario, secao, frisaString, assentoA, assentoB, assentoCamarote, assentoFrisa, assentoBalcao, camaroteString;
+    boolean cpfInvalido = true, menuPrincipal = true, comprar = false, opcaoInvalida = false, sair = false, estatistica = false, imprimir = false, platAOcupado[][][] = new boolean [9][5][5], platBOcupado[][][] = new boolean[9][10][10], camarotesOcupado[][][] = new boolean[9][5][10], frisasOcupado[][][] = new boolean[9][6][5], balcaoNobreOcupado[][][] = new boolean[9][10][5];
+    int num, maisVendida = 0, precoplatA = 40, precoplatB = 60, precoCamarote = 80, precoFrisa = 120, precoBalcaonobre = 250,totalVendido = 0, totalDisponivel = 0, secaoInt, assentoAint, assentoBint, assentoCamaroteint, assentoFrisaint, assentoBalcaoint, contador = 1, horarioInt, camaroteInt, frisaInt, colunaA, linhaA, linhaB, colunaB, camaroteEscolhido, posicaoEscolhida, posicaoFrisa, frisaEscolhida, linhaBalcao, colunaBalcao;
+    int pesos1 [] = {10, 9, 8, 7, 6, 5, 4, 3, 2}, pesos2 [] = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2}, vendasPorPeca [] = new int[3], receitaPorPeca [] = new int[3], platA [][][] = new int [9][5][5], platB [][][] = new int[9][10][10], frisas [][][] = new int [9][6][5], camarotes [][][] = new int[9][5][10], balcaoNobre [][][] = new int[9][10][5];
+    
 
       // Preenche a matriz 5x5 platA com elementos de 1 à 25, em 5 fileiras e 5 colunas e as exibe no final
     for(int peca = 0; peca < 9; peca++)
@@ -54,7 +52,7 @@ public class PIMDosCria {
    for(int peca = 0; peca < 9; peca++)
     {
         for(int camarote = 0; camarote < 5; camarote++)
-        {
+        {           
         contador = 1;
             for(int posicao = 0; posicao < 10; posicao++)
             {
@@ -77,18 +75,70 @@ public class PIMDosCria {
             }
         }
    }
+  
+                while (cpfInvalido) 
+                {
+    System.out.print("Digite seu CPF (somente números ou em formato xxx.xxx.xxx-xx): ");
+    cpf = ler.nextLine();
+    cpf = cpf.replace(".", "").replace("-", "");
+    
+    if (cpf.length() != 11 || !cpf.matches("\\d+")) {
+        System.out.println("CPF inválido. Por favor, digite novamente.");
+    } else {
+        // Verifica se todos os dígitos são iguais
+        if (cpf.matches("(\\d)\\1{10}")) 
+        {
+            System.out.println("CPF inválido. Por favor, digite novamente.");
+            continue;
+        }
 
-   System.out.printf("Selecione uma opção:\n1. Comprar ingresso. \n2. Imprimir ingresso. \n3. Estatística de Vendas.\n4. Sair do programa\n");
+        try {
+            int soma1 = 0;
+            int soma2 = 0;
+
+            // Cálculo do primeiro dígito verificador
+            for (int i = 0; i < 9; i++) 
+            {
+                num = Integer.parseInt(cpf.substring(i, i + 1));
+                soma1 += num * pesos1[i];
+                soma2 += num * pesos2[i];
+            }
+
+            int digito1 = soma1 % 11 < 2 ? 0 : 11 - (soma1 % 11);
+            soma2 += digito1 * pesos2[9];
+
+            // Cálculo do segundo dígito verificador
+            int digito2 = soma2 % 11 < 2 ? 0 : 11 - (soma2 % 11);
+
+            // Verifica se os dígitos verificadores calculados são iguais aos fornecidos no CPF
+            if (cpf.endsWith(String.valueOf(digito1) + String.valueOf(digito2))) 
+            {
+                System.out.println("CPF válido.");
+                cpfInvalido = false;
+            } else 
+            {
+                System.out.println("CPF inválido. Por favor, digite novamente.");
+            }
+                } catch (NumberFormatException e) 
+                        {
+                System.out.println("Erro ao calcular os dígitos verificadores. Por favor, tente novamente.");
+                        }
+                    }
+                }
                 
-                do{
+                while(menuPrincipal)
+                {
+                
+                    System.out.printf("Selecione uma opção:\n1. Comprar ingresso. \n2. Imprimir ingresso. \n3. Estatística de Vendas.\n4. Sair do programa\n");
                     opcao = ler.nextLine();
-                    opcaoInt = Integer.parseInt(opcao);
-                    switch(opcao.toLowerCase()){
+                    switch(opcao.toLowerCase())
+                    {
                  case "1":
                  case "1.":
-                 case "comprar ingresso":
+                 case "comprar":
                     comprar = true;
                     opcaoInvalida = false;
+                    menuPrincipal = false;
                     break;
                 case "2":
                 case "2.":
@@ -96,308 +146,438 @@ public class PIMDosCria {
                     System.out.println("Imprimir ingresso");
                     imprimir = true;
                     opcaoInvalida = false;
+                    menuPrincipal = false;
                     break;
                 case "3":
                 case "3.":
                 case "estatisticas de venda":
-                    System.out.println("Estatísticas de Venda");
                     estatistica = true;
                     opcaoInvalida = false;
+                    menuPrincipal = false;
                     break;
                 case "4":
                 case "4.":
                 case "sair do programa":
                     System.out.println("Sair do programa.");
                     sair = true;
-                    opcaoInvalida = false;
-                    break;
+                    menuPrincipal = false;
                 default:
                     System.out.println("Opção inválida, favor selecione outra.");
                     opcaoInvalida = true;
-                    break;
-                }
-                } while(opcaoInvalida);
+                    menuPrincipal = true;
+                    }
 
-                while(comprar){
-                    System.out.printf("Escolha o horário de sua preferência:\nManhã: \n1. Peça 1 - 08:00 \n2. Peça 2 - 09:30 \n3. Peça 3 - 11:00 \nTarde:\n4. Peça 1 - 13:00\n5. Peça 2 - 15:30\n6. Peça 3 - 17:00\nNoite: \n7. Peça 1 - 18:30\n8. Peça 2 - 20:00\n9. Peça 3 - 21:30\n");
-                    do{
-                    horario = ler.nextLine();
-                    horarioInt = Integer.parseInt(horario);
-                    switch (horario) 
-                    {
-                        case "1":
-                        case "2":
-                        case "3":
-                        case "4":
-                        case "5":
-                        case "6":
-                        case "7":
-                        case "8":
-                        case "9":
+                while (comprar) {
+                    System.out.printf("Escolha o horário de sua preferência:\nManhã:\n1. Peça 1 - 08:00\n2. Peça 2 - 09:30\n3. Peça 3 - 11:00\nTarde:\n4. Peça 1 - 13:00\n5. Peça 2 - 15:30\n6. Peça 3 - 17:00\nNoite:\n7. Peça 1 - 18:30\n8. Peça 2 - 20:00\n9. Peça 3 - 21:30\n");
+                    do {
+                        horario = ler.nextLine();
+                        horarioInt = Integer.parseInt(horario);
+                        if (horarioInt >= 1 && horarioInt <= 9) {
                             opcaoInvalida = false;
                             System.out.printf("Escolha sua seção de preferência:\n1. Plateia A: R$ 40,00\n2. Plateia B: R$ 60,00\n3. Camarote: R$ 80,00\n4. Frisa: R$ 120,00\n5. Balcão Nobre: R$ 250,00\n");
-                            do
-                            {
-                            secao = ler.nextLine();
-                            secaoInt = Integer.parseInt(secao);
-                            switch (secao) 
-                            {
-                                case "1":
-                            System.out.println("Você escolheu Plateia A.");
-                            System.out.println("Assentos disponíveis:");
-                            for (int linha = 0; linha < 5; linha++) 
-                            {
-                                for (int coluna = 0; coluna < 5; coluna++) 
-                                {
-                                    System.out.printf("%2d ", platA[horarioInt - 1][linha][coluna]);
-                                }
-                                System.out.println();
-                            }
-                            
-                            System.out.println("Escolha um assento (informe o número): ");
-                            do
-                            {
-                            assentoA = ler.nextLine();
-                            assentoAint = Integer.parseInt(assentoA);
-                            if(assentoAint > 0 && assentoAint < 26)
-                            {
-                            linhaA = (assentoAint - 1) / 5; // Calcula a linha com base no número do assento
-                            colunaA = (assentoAint - 1) % 5; // Calcula a coluna com base no número do assento
-                            if (platAOcupado[horarioInt - 1][linhaA][colunaA]) 
-                                {
-                                System.out.println("Assento já ocupado. Tente novamente.");
-                                } else 
-                                {
-                                platAOcupado[horarioInt - 1][linhaA][colunaA] = true;
-                                System.out.println("Assento reservado com sucesso!");
-                                }
-                                comprar = false;
-                            opcaoInvalida = false;
-                            }else
-                            {
-                                System.out.println("Opção inválida. Tente novmente.");
-                                opcaoInvalida = true;
-                            }
-                            
-                            break;
-                            }while(opcaoInvalida);
-
-                                case "2":
-                            System.out.println("Você escolheu Plateia B.");
-                            System.out.println("Assentos disponíveis:");
-                            for (int linha = 0; linha < 10; linha++) 
-                            {
-                                for (int coluna = 0; coluna < 10; coluna++) 
-                                {
-                                    System.out.printf("%2d ", platB[horarioInt - 1][linha][coluna]);
-                                }
-                                System.out.println();
-                            }
-                            System.out.println("Escolha um assento (informe o número): ");
-                            do
-                            {
-                            assentoB = ler.nextLine();
-                            assentoBint = Integer.parseInt(assentoB);
-                            if(assentoBint > 0 && assentoBint < 101)
-                            {
-                            linhaB = (assentoBint - 1) / 10; // Calcula a linha com base no número do assento
-                            colunaB = (assentoBint - 1) % 10; // Calcula a coluna com base no número do assento
-                            if (platBOcupado[horarioInt - 1][linhaB][colunaB]) 
-                            {
-                                System.out.println("Assento já ocupado. Tente novamente.");
-                            } else 
-                            {
-                                platBOcupado[horarioInt - 1][linhaB][colunaB] = true;
-                                System.out.println("Assento reservado com sucesso!");
-                                opcaoInvalida = false;
-                                comprar = false;
-                            }
-                            }
-                            else
-                            {
-                                System.out.println("Opção inválida. Tente novmente.");
-                                opcaoInvalida = true;
-                            }   
-                            break;
-                        }while (opcaoInvalida);   
-
-                                case "3": //Oferece um submenu para escolher o camarote de 1 à 5 para depois selecionar o assento.
-                                   System.out.println("Escolha um camarote:\n1. Camarote 1\n2. Camarote 2\n3. Camarote 3\n4. Camarote 4\n5. Camarote 5");
-                                   do
-                                    {
-                                    String camarote = ler.nextLine();
-                                        switch(camarote)
-                                        {
-                                            case "1:":
-                                            case "1":
-                                            case "2":
-                                            case "2.":
-                                            case "3":
-                                            case "4":
-                                            case "4.":
-                                            case "5":
-                                            case "5:":
-                                                camaroteInt = Integer.parseInt(camarote);
-                                                System.out.println("Camarote " + camaroteInt + ": ");
-                                                for(int posicao = 0; posicao < 10; posicao++)
-                                                {
-                                                    System.out.print (camarotes[horarioInt - 1][camaroteInt - 1][posicao] + " ");
-                                                }
-                                                System.out.println();
-                                                opcaoInvalida = false;
-                                                
-                                                break;
-                                            default:
-                                                opcaoInvalida = true;
-                                                System.out.println("Opção inválida, tente novamente.");
-                                                break;
-                                            }
-                                        }while(opcaoInvalida);
-                            
-                            System.out.println("Escolha um assento (informe o número): ");
-                            do
-                            {
-                                assentoCamarote = ler.nextLine();
-                                assentoCamaroteint = Integer.parseInt(assentoCamarote);
-                             if(assentoCamaroteint > 0 && assentoCamaroteint < 11)
-                                {
-                                    camaroteEscolhido = (assentoCamaroteint - 1) / 10; // Calcula o camarote com base no número do assento
-                                    posicaoEscolhida = (assentoCamaroteint - 1) % 10; // Calcula a posição com base no número do assento
-                                if (camarotesOcupado[horarioInt - 1][camaroteEscolhido][posicaoEscolhida]) 
-                                {
-                                 System.out.println("Assento já ocupado. Tente novamente.");
-                                } else 
-                                {
-                                    camarotesOcupado[horarioInt - 1][camaroteEscolhido][posicaoEscolhida] = true;
-                                    System.out.println("Assento reservado com sucesso!");
-                                    comprar = false;
-                                    
-                                }
-                                opcaoInvalida = false;
-                            }else
-                            {
-                                System.out.println("Opção inválida. Tente novamente.");
-                                opcaoInvalida = true;
-                            }
-
-                            break;
-                        }while(opcaoInvalida);
-                                case "4":
-                                System.out.println("Escolha uma frisa:\n1. Frisa 1\n2. Frisa 2\n3. Frisa 3\n4. Frisa 4\n5. Frisa 5\n6. Frisa 6");
-                                do
-                                {
-                                frisaString = ler.nextLine();
-                                            switch(frisaString)
-                                         {
-                                        case "1:":
-                                        case "1":
-                                        case "2":
-                                        case "2.":
-                                        case "3":
-                                        case "4":
-                                        case "4.":
-                                        case "5":
-                                        case "5.":
-                                        case "6":
-                                        case "6.":
-                                            frisaInt = Integer.parseInt(frisaString);
-                                            System.out.println("Camarote " + frisaInt + ": ");
-                                            for(int posicao = 0; posicao < 5; posicao++)
-                                            {
-                                                System.out.print (frisas[horarioInt - 1][frisaInt - 1][posicao] + " ");
+                            do {
+                                secao = ler.nextLine();
+                                secaoInt = Integer.parseInt(secao);
+                                switch (secaoInt) {
+                                    case 1:
+                                        System.out.println("Você escolheu Plateia A.");
+                                        System.out.println("Assentos disponíveis:");
+                                        for (int linha = 0; linha < 5; linha++) {
+                                            for (int coluna = 0; coluna < 5; coluna++) {
+                                                System.out.printf("%2d ", platA[horarioInt - 1][linha][coluna]);
                                             }
                                             System.out.println();
-                                            opcaoInvalida = false;
-                                            break;
-                                        default:
-                                            opcaoInvalida = true;
-                                            System.out.println("Opção inválida, tente novamente.");
                                         }
-                                }while(opcaoInvalida);
-                                
-                                System.out.println("Escolha um assento (informe o número): ");
-                                do
-                                {
-                                     assentoFrisa = ler.nextLine();
-                                     assentoFrisaint = Integer.parseInt(assentoFrisa);
-                                    if(assentoFrisaint > 0 && assentoFrisaint < 6)
-                                    {
-                                    frisaEscolhida = (assentoFrisaint - 1) / 5; // Calcula a frisa com base no número do assento
-                                    posicaoFrisa = (assentoFrisaint - 1) % 5; // Calcula a posição com base no número do assento
-                                    if (frisasOcupado[horarioInt - 1][frisaEscolhida][posicaoFrisa]) 
-                                    {
-                                    System.out.println("Assento já ocupado. Tente novamente.");
-                                    } else 
-                                    {
-                                    frisasOcupado[horarioInt - 1][frisaEscolhida][posicaoFrisa] = true;
-                                    System.out.println("Assento reservado com sucesso!");
-                                    opcaoInvalida = false;
-                                    comprar = false;
-                                    }
-                                    }else
-                                     {
-                                        System.out.println("Opção inválida. Tente novamente.");
+                                        System.out.println("Escolha um assento (informe o número): ");
+                                        do {
+                                            assentoA = ler.nextLine();
+                                            assentoAint = Integer.parseInt(assentoA);
+                                            if (assentoAint > 0 && assentoAint < 26) {
+                                                linhaA = (assentoAint - 1) / 5;
+                                                colunaA = (assentoAint - 1) % 5;
+                                                if (platAOcupado[horarioInt - 1][linhaA][colunaA]) {
+                                                    System.out.println("Assento já ocupado. Tente novamente.");
+                                                } else {
+                                                    platAOcupado[horarioInt - 1][linhaA][colunaA] = true;
+                                                    System.out.println("Assento reservado com sucesso!");
+                                                    comprar = false;
+                                                    menuPrincipal = true;
+                                                }
+                                                opcaoInvalida = false;
+                                            } else {
+                                                System.out.println("Opção inválida. Tente novamente.");
+                                                opcaoInvalida = true;
+                                            }
+                                        } while (opcaoInvalida);
+                                        break;
+                                    case 2:
+                                        System.out.println("Você escolheu Plateia B.");
+                                        System.out.println("Assentos disponíveis:");
+                                        for (int linha = 0; linha < 10; linha++) {
+                                            for (int coluna = 0; coluna < 10; coluna++) {
+                                                System.out.printf("%2d ", platB[horarioInt - 1][linha][coluna]);
+                                            }
+                                            System.out.println();
+                                        }
+                                        System.out.println("Escolha um assento (informe o número): ");
+                                        do {
+                                            assentoB = ler.nextLine();
+                                            assentoBint = Integer.parseInt(assentoB);
+                                            if (assentoBint > 0 && assentoBint < 101) {
+                                                linhaB = (assentoBint - 1) / 10;
+                                                colunaB = (assentoBint - 1) % 10;
+                                                if (platBOcupado[horarioInt - 1][linhaB][colunaB]) {
+                                                    System.out.println("Assento já ocupado. Tente novamente.");
+                                                } else {
+                                                    platBOcupado[horarioInt - 1][linhaB][colunaB] = true;
+                                                    System.out.println("Assento reservado com sucesso!");
+                                                    comprar = false;
+                                                    menuPrincipal = true;
+                                                }
+                                                opcaoInvalida = false;
+                                            } else {
+                                                System.out.println("Opção inválida. Tente novamente.");
+                                                opcaoInvalida = true;
+                                            }
+                                        } while (opcaoInvalida);
+                                        break;
+                                    case 3:
+                                        System.out.println("Você escolheu Camarote.");
+                                        System.out.println("Camarotes disponíveis:");
+                                        for (int camarote = 0; camarote < 5; camarote++) {
+                                            for (int posicao = 0; posicao < 10; posicao++) {
+                                                System.out.printf("%2d ", camarotes[horarioInt - 1][camarote][posicao]);
+                                            }
+                                            System.out.println();
+                                        }
+                                        System.out.println("Escolha um camarote (1-5): ");
+                                        camaroteString = ler.nextLine();
+                                        camaroteInt = Integer.parseInt(camaroteString);
+                                        camaroteEscolhido = camaroteInt - 1;
+                                        if (camaroteInt >= 1 && camaroteInt <= 5) {
+                                            System.out.println("Escolha um assento no camarote (1-10): ");
+                                            do {
+                                                assentoCamarote = ler.nextLine();
+                                                assentoCamaroteint = Integer.parseInt(assentoCamarote);
+                                                if (assentoCamaroteint >= 1 && assentoCamaroteint <= 10) {
+                                                    posicaoEscolhida = assentoCamaroteint - 1;
+                                                    if (camarotesOcupado[horarioInt - 1][camaroteEscolhido][posicaoEscolhida]) {
+                                                        System.out.println("Assento já ocupado. Tente novamente.");
+                                                    } else {
+                                                        camarotesOcupado[horarioInt - 1][camaroteEscolhido][posicaoEscolhida] = true;
+                                                        System.out.println("Assento reservado com sucesso!");
+                                                        comprar = false;
+                                                        menuPrincipal = true;
+                                                    }
+                                                    opcaoInvalida = false;
+                                                } else {
+                                                    System.out.println("Opção inválida. Tente novamente.");
+                                                    opcaoInvalida = true;
+                                                }
+                                            } while (opcaoInvalida);
+                                        } else {
+                                            System.out.println("Camarote inválido. Tente novamente.");
+                                            opcaoInvalida = true;
+                                        }
+                                        break;
+                                    case 4:
+                                        System.out.println("Você escolheu Frisa.");
+                                        System.out.println("Frisas disponíveis:");
+                                        for (int frisa = 0; frisa < 6; frisa++) {
+                                            for (int posicao = 0; posicao < 5; posicao++) {
+                                                System.out.printf("%2d ", frisas[horarioInt - 1][frisa][posicao]);
+                                            }
+                                            System.out.println();
+                                        }
+                                        System.out.println("Escolha uma frisa (1-6): ");
+                                        frisaString = ler.nextLine();
+                                        frisaInt = Integer.parseInt(frisaString);
+                                        frisaEscolhida = frisaInt - 1;
+                                        if (frisaInt >= 1 && frisaInt <= 6) {
+                                            System.out.println("Escolha um assento na frisa (1-5): ");
+                                            do {
+                                                assentoFrisa = ler.nextLine();
+                                                assentoFrisaint = Integer.parseInt(assentoFrisa);
+                                                if (assentoFrisaint >= 1 && assentoFrisaint <= 5) {
+                                                    posicaoFrisa = assentoFrisaint - 1;
+                                                    if (frisasOcupado[horarioInt - 1][frisaEscolhida][posicaoFrisa]) {
+                                                        System.out.println("Assento já ocupado. Tente novamente.");
+                                                    } else {
+                                                        frisasOcupado[horarioInt - 1][frisaEscolhida][posicaoFrisa] = true;
+                                                        System.out.println("Assento reservado com sucesso!");
+                                                        menuPrincipal = true;
+                                                        comprar = false;
+                                                    }
+                                                    opcaoInvalida = false;
+                                                } else {
+                                                    System.out.println("Opção inválida. Tente novamente.");
+                                                    opcaoInvalida = true;
+                                                }
+                                            } while (opcaoInvalida);
+                                        } else {
+                                            System.out.println("Frisa inválida. Tente novamente.");
+                                            opcaoInvalida = true;
+                                        }
+                                        break;
+                                    case 5:
+                                        System.out.println("Você escolheu Balcão Nobre.");
+                                        System.out.println("Assentos disponíveis:");
+                                        for (int linha = 0; linha < 10; linha++) {
+                                            for (int coluna = 0; coluna < 5; coluna++) {
+                                                System.out.printf("%2d ", balcaoNobre[horarioInt - 1][linha][coluna]);
+                                            }
+                                            System.out.println();
+                                        }
+                                        System.out.println("Escolha um assento (informe o número): ");
+                                        do {
+                                            assentoBalcao = ler.nextLine();
+                                            assentoBalcaoint = Integer.parseInt(assentoBalcao);
+                                            if (assentoBalcaoint > 0 && assentoBalcaoint < 51) {
+                                                linhaBalcao = (assentoBalcaoint - 1) / 5;
+                                                colunaBalcao = (assentoBalcaoint - 1) % 5;
+                                                if (balcaoNobreOcupado[horarioInt - 1][linhaBalcao][colunaBalcao]) {
+                                                    System.out.println("Assento já ocupado. Tente novamente.");
+                                                } else {
+                                                    balcaoNobreOcupado[horarioInt - 1][linhaBalcao][colunaBalcao] = true;
+                                                    System.out.println("Assento reservado com sucesso!");
+                                                    menuPrincipal = true;
+                                                    comprar = false;
+                                                }
+                                                opcaoInvalida = false;
+                                            } else {
+                                                System.out.println("Opção inválida. Tente novamente.");
+                                                opcaoInvalida = true;
+                                            }
+                                        } while (opcaoInvalida);
+                                        break;
+                                    default:
+                                        System.out.println("Opção inválida, favor selecione outra.");
                                         opcaoInvalida = true;
-                                     }
-                                break;
-                            }while(opcaoInvalida);
-
-                                case "5":
-                                    System.out.println("Você escolheu Balcão Nobre.");
-                                     System.out.println("Assentos disponíveis:");
-                                    for (int linha = 0; linha < 10; linha++) 
-                                     {
-                                    for (int coluna = 0; coluna < 5; coluna++)
-                                    {
-                                    System.out.printf("%2d ", balcaoNobre[horarioInt - 1][linha][coluna]);
-                                    }
-                                     System.out.println();
-                                    }
-
-                                    System.out.println("Escolha um assento (informe o número): ");
-                                        do
-                                        {
-                                    assentoBalcao = ler.nextLine();
-                                    assentoBalcaoint = Integer.parseInt(assentoBalcao);
-                                     if(assentoBalcaoint > 0 && assentoBalcaoint < 51){
-                                    linhaBalcao = (assentoBalcaoint - 1) / 5; // Calcula a linha com base no número do assento
-                                    colunaBalcao = (assentoBalcaoint - 1) % 5; // Calcula a coluna com base no número do assento
-                                    if (balcaoNobreOcupado[horarioInt - 1][linhaBalcao][colunaBalcao]) 
-                                    {
-                                    System.out.println("Assento já ocupado. Tente novamente.");
-                                    } else 
-                                    {
-                                    balcaoNobreOcupado[horarioInt - 1][linhaBalcao][colunaBalcao] = true;
-                                    System.out.println("Assento reservado com sucesso!");
-                                     }
-                                    opcaoInvalida = false;
-                                    comprar = false;
-                                    }else
-                                    {
-                                    opcaoInvalida = true;
-                                    System.out.println("Opção inválida. Tente novmente.");
-                                    }
-                                     
-                                    break;
-                                }while(opcaoInvalida);
-                                default:
-                                    System.out.println("Seção inválida. Tente novamente.");
-                                    comprar = true;
-                                    opcaoInvalida = true;
-                                    break;
-                                    }
-                            }
-                            while(opcaoInvalida);
-                            default:
-                                System.out.println("Horário inválido. Tente novamente.");
-                                comprar = true;
-                                opcaoInvalida = true;
-                                break;
-                            
+                                        break;
+                                }
+                            } while (opcaoInvalida);
+                        } else {
+                            System.out.println("Opção inválida, favor selecione outra.");
+                            opcaoInvalida = true;
                         }
+                    } while (opcaoInvalida);
+                }
+
+
+
+                // Estatísticas de venda
+                while (estatistica)
+                 {
             
-            ler.close();
-        }while(opcaoInvalida);
-    }
-}
+                // Somar vendas e receitas de cada peça
+                for (int i = 0; i < 9; i++) 
+                {
+                    // Peça 1 (horários 1, 4, 7)
+                    if (i == 0 || i == 3 || i == 6) 
+                    {
+                        for (int j = 0; j < 5; j++) 
+                        {
+                            for (int k = 0; k < 5; k++) 
+                            {
+                                if (platAOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[0]++;
+                                    receitaPorPeca[0] += precoplatA;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 10; j++) 
+                        {
+                            for (int k = 0; k < 10; k++) 
+                            {
+                                if (platBOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[0]++;
+                                    receitaPorPeca[0] += precoplatB;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 5; j++) 
+                        {
+                            for (int k = 0; k < 10; k++) 
+                            {
+                                if (camarotesOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[0]++;
+                                    receitaPorPeca[0] += precoCamarote;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 6; j++) 
+                        {
+                            for (int k = 0; k < 5; k++) 
+                            {
+                                if (frisasOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[0]++;
+                                    receitaPorPeca[0] += precoFrisa;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 10; j++) 
+                        {
+                            for (int k = 0; k < 5; k++) 
+                            {
+                                if (balcaoNobreOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[0]++;
+                                    receitaPorPeca[0] += precoBalcaonobre;
+                                }
+                            }
+                        }
+                    }
+            
+                    // Peça 2 (horários 2, 5, 8)
+                    if (i == 1 || i == 4 || i == 7) 
+                    {
+                        for (int j = 0; j < 5; j++) 
+                        {
+                            for (int k = 0; k < 5; k++) 
+                            {
+                                if (platAOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[1]++;
+                                    receitaPorPeca[1] += precoplatA;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 10; j++) 
+                        {
+                            for (int k = 0; k < 10; k++) 
+                            {
+                                if (platBOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[1]++;
+                                    receitaPorPeca[1] += precoplatB;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 5; j++) 
+                        {
+                            for (int k = 0; k < 10; k++) 
+                            {
+                                if (camarotesOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[1]++;
+                                    receitaPorPeca[1] += precoCamarote;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 6; j++) 
+                        {
+                            for (int k = 0; k < 5; k++) 
+                            {
+                                if (frisasOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[1]++;
+                                    receitaPorPeca[1] += precoFrisa;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 10; j++) 
+                        {
+                            for (int k = 0; k < 5; k++) 
+                            {
+                                if (balcaoNobreOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[1]++;
+                                    receitaPorPeca[1] += precoBalcaonobre;
+                                }
+                            }
+                        }
+                    }
+            
+                    // Peça 3 (horários 3, 6, 9)
+                    if(i == 2 || i == 5 || i == 8)
+                    {
+                        for (int j = 0; j < 5; j++)
+                        {
+                            for (int k = 0; k < 5; k++)
+                            {
+                                if (platAOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[2]++;
+                                    receitaPorPeca[2] += precoplatA;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 10; j++) 
+                        {
+                            for (int k = 0; k < 10; k++) 
+                            {
+                                if (platBOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[2]++;
+                                    receitaPorPeca[2] += precoplatB;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 5; j++) 
+                        {
+                            for (int k = 0; k < 10; k++) 
+                            {
+                                if (camarotesOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[2]++;
+                                    receitaPorPeca[2] += precoCamarote;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 6; j++) 
+                        {
+                            for (int k = 0; k < 5; k++) 
+                            {
+                                if (frisasOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[2]++;
+                                    receitaPorPeca[2] += precoFrisa;
+                                }
+                            }
+                        }
+                        for (int j = 0; j < 10; j++) 
+                        {
+                            for (int k = 0; k < 5; k++) 
+                            {
+                                if (balcaoNobreOcupado[i][j][k])
+                                {
+                                    vendasPorPeca[2]++;
+                                    receitaPorPeca[2] += precoBalcaonobre;
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                // Determinar a peça mais vendida
+                for (int i = 1; i < 3; i++) 
+                {
+                    if (vendasPorPeca[i] > vendasPorPeca[maisVendida]) 
+                    {
+                        maisVendida = i;
+                    }
+                }
+            
+                // Exibir estatísticas
+                System.out.println("Estatísticas de Vendas:");
+                for (int i = 0; i < 3; i++) 
+                {
+                    System.out.println("Peça " + (i + 1) + " - Vendas: " + vendasPorPeca[i] + " ingressos, Receita: R$" + receitaPorPeca[i]);
+                }
+                System.out.println("A peça mais vendida foi a Peça " + (maisVendida + 1) + " com " + vendasPorPeca[maisVendida] + " ingressos vendidos.");
+            
+                estatistica = false;
+                menuPrincipal = true;
+                // Encerrar a exibição de estatísticas
+            }
+            while(imprimir)
+            {
+                
+            }
+        }
+    }    
 }
