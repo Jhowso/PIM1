@@ -3,9 +3,9 @@ import java.util.Scanner;
 public class PIMDosCria {
         public static void main(String[] args) {
     Scanner ler = new Scanner(System.in);
-    String cpf, opcao, horario, secao, frisaString, assentoA, assentoB, assentoCamarote, assentoFrisa, assentoBalcao, camaroteString;
-    boolean cpfInvalido = true, menuPrincipal = true, comprar = false, opcaoInvalida = false, sair = false, estatistica = false, imprimir = false, platAOcupado[][][] = new boolean [9][5][5], platBOcupado[][][] = new boolean[9][10][10], camarotesOcupado[][][] = new boolean[9][5][10], frisasOcupado[][][] = new boolean[9][6][5], balcaoNobreOcupado[][][] = new boolean[9][10][5];
-    int num, maisVendida = 0, precoplatA = 40, precoplatB = 60, precoCamarote = 80, precoFrisa = 120, precoBalcaonobre = 250,totalVendido = 0, totalDisponivel = 0, secaoInt, assentoAint, assentoBint, assentoCamaroteint, assentoFrisaint, assentoBalcaoint, contador = 1, horarioInt, camaroteInt, frisaInt, colunaA, linhaA, linhaB, colunaB, camaroteEscolhido, posicaoEscolhida, posicaoFrisa, frisaEscolhida, linhaBalcao, colunaBalcao;
+    String cpfParaImprimir, cpf = "0" , cpfs[] = new String [10], compras[] = new String[10], opcao, horario, secao, frisaString, assentoA, assentoB, assentoCamarote, assentoFrisa, assentoBalcao, camaroteString;
+    boolean encontrouIngresso, cpfInvalido = true, menuPrincipal = true, comprar = false, opcaoInvalida = false, sair = false, estatistica = false, imprimir = false, platAOcupado[][][] = new boolean [9][5][5], platBOcupado[][][] = new boolean[9][10][10], camarotesOcupado[][][] = new boolean[9][5][10], frisasOcupado[][][] = new boolean[9][6][5], balcaoNobreOcupado[][][] = new boolean[9][10][5];
+    int compraCount = 0, horarios = 0, num, maisVendida = 0, precoplatA = 40, precoplatB = 60, precoCamarote = 80, precoFrisa = 120, precoBalcaonobre = 250,totalVendido = 0, totalDisponivel = 0, secaoInt, assentoAint, assentoBint, assentoCamaroteint, assentoFrisaint, assentoBalcaoint, contador = 1, horarioInt, camaroteInt, frisaInt, colunaA, linhaA, linhaB, colunaB, camaroteEscolhido, posicaoEscolhida, posicaoFrisa, frisaEscolhida, linhaBalcao, colunaBalcao;
     int pesos1 [] = {10, 9, 8, 7, 6, 5, 4, 3, 2}, pesos2 [] = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2}, vendasPorPeca [] = new int[3], receitaPorPeca [] = new int[3], platA [][][] = new int [9][5][5], platB [][][] = new int[9][10][10], frisas [][][] = new int [9][6][5], camarotes [][][] = new int[9][5][10], balcaoNobre [][][] = new int[9][10][5];
     
 
@@ -200,6 +200,9 @@ public class PIMDosCria {
                                                 } else {
                                                     platAOcupado[horarioInt - 1][linhaA][colunaA] = true;
                                                     System.out.println("Assento reservado com sucesso!");
+                                                    cpfs[compraCount] = cpf;
+                                                    compras[compraCount] = "Plateia A - Assento " + assentoA + " - Horário " + horarioInt;
+                                                    compraCount++;
                                                     comprar = false;
                                                     menuPrincipal = true;
                                                 }
@@ -231,6 +234,9 @@ public class PIMDosCria {
                                                 } else {
                                                     platBOcupado[horarioInt - 1][linhaB][colunaB] = true;
                                                     System.out.println("Assento reservado com sucesso!");
+                                                    cpfs[compraCount] = cpf;
+                                                    compras[compraCount] = "Plateia B - Assento " + assentoB + " - Horário " + horarioInt;
+                                                    compraCount++;
                                                     comprar = false;
                                                     menuPrincipal = true;
                                                 }
@@ -266,6 +272,9 @@ public class PIMDosCria {
                                                     } else {
                                                         camarotesOcupado[horarioInt - 1][camaroteEscolhido][posicaoEscolhida] = true;
                                                         System.out.println("Assento reservado com sucesso!");
+                                                        cpfs[compraCount] = cpf;
+                                                        compras[compraCount] = "Camarote " + (camaroteEscolhido+1) + "Assento " + assentoCamarote + " - Horário " + horarioInt;
+                                                        compraCount++;
                                                         comprar = false;
                                                         menuPrincipal = true;
                                                     }
@@ -305,6 +314,9 @@ public class PIMDosCria {
                                                     } else {
                                                         frisasOcupado[horarioInt - 1][frisaEscolhida][posicaoFrisa] = true;
                                                         System.out.println("Assento reservado com sucesso!");
+                                                        cpfs[compraCount] = cpf;
+                                                        compras[compraCount] = "Frisa " + (frisaEscolhida + 1) + "Assento " + assentoFrisa + " - Horário " + horarioInt;
+                                                        compraCount++;
                                                         menuPrincipal = true;
                                                         comprar = false;
                                                     }
@@ -340,6 +352,9 @@ public class PIMDosCria {
                                                 } else {
                                                     balcaoNobreOcupado[horarioInt - 1][linhaBalcao][colunaBalcao] = true;
                                                     System.out.println("Assento reservado com sucesso!");
+                                                    cpfs[compraCount] = cpf;
+                                                    compras[compraCount] = "Balcão Nobre - Assento " + assentoBalcao + " - Horário " + horarioInt;
+                                                    compraCount++;
                                                     menuPrincipal = true;
                                                     comprar = false;
                                                 }
@@ -364,66 +379,64 @@ public class PIMDosCria {
                 }
 
 
-
-                // Estatísticas de venda
                 while (estatistica)
                  {
             
                 // Somar vendas e receitas de cada peça
-                for (int i = 0; i < 9; i++) 
+                for (horarios = 0; horarios < 9; horarios++) 
                 {
                     // Peça 1 (horários 1, 4, 7)
-                    if (i == 0 || i == 3 || i == 6) 
+                    if (horarios == 0 || horarios == 3 || horarios == 6) 
                     {
-                        for (int j = 0; j < 5; j++) 
+                        for (int secoes = 0; secoes < 5; secoes++) 
                         {
-                            for (int k = 0; k < 5; k++) 
+                            for (int assentos = 0; assentos < 5; assentos++) 
                             {
-                                if (platAOcupado[i][j][k])
+                                if (platAOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[0]++;
                                     receitaPorPeca[0] += precoplatA;
                                 }
                             }
                         }
-                        for (int j = 0; j < 10; j++) 
+                        for (int secoes = 0; secoes < 10; secoes++) 
                         {
-                            for (int k = 0; k < 10; k++) 
+                            for (int assentos = 0; assentos < 10; assentos++) 
                             {
-                                if (platBOcupado[i][j][k])
+                                if (platBOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[0]++;
                                     receitaPorPeca[0] += precoplatB;
                                 }
                             }
                         }
-                        for (int j = 0; j < 5; j++) 
+                        for (int secoes = 0; secoes < 5; secoes++) 
                         {
-                            for (int k = 0; k < 10; k++) 
+                            for (int assentos = 0; assentos < 10; assentos++) 
                             {
-                                if (camarotesOcupado[i][j][k])
+                                if (camarotesOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[0]++;
                                     receitaPorPeca[0] += precoCamarote;
                                 }
                             }
                         }
-                        for (int j = 0; j < 6; j++) 
+                        for (int secoes = 0; secoes < 6; secoes++) 
                         {
-                            for (int k = 0; k < 5; k++) 
+                            for (int assentos = 0; assentos < 5; assentos++) 
                             {
-                                if (frisasOcupado[i][j][k])
+                                if (frisasOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[0]++;
                                     receitaPorPeca[0] += precoFrisa;
                                 }
                             }
                         }
-                        for (int j = 0; j < 10; j++) 
+                        for (int secoes = 0; secoes < 10; secoes++) 
                         {
-                            for (int k = 0; k < 5; k++) 
+                            for (int assentos = 0; assentos < 5; assentos++) 
                             {
-                                if (balcaoNobreOcupado[i][j][k])
+                                if (balcaoNobreOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[0]++;
                                     receitaPorPeca[0] += precoBalcaonobre;
@@ -433,57 +446,57 @@ public class PIMDosCria {
                     }
             
                     // Peça 2 (horários 2, 5, 8)
-                    if (i == 1 || i == 4 || i == 7) 
+                    if (horarios == 1 || horarios == 4 || horarios == 7) 
                     {
-                        for (int j = 0; j < 5; j++) 
+                        for (int secoes = 0; secoes < 5; secoes++) 
                         {
-                            for (int k = 0; k < 5; k++) 
+                            for (int assentos = 0; assentos < 5; assentos++) 
                             {
-                                if (platAOcupado[i][j][k])
+                                if (platAOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[1]++;
                                     receitaPorPeca[1] += precoplatA;
                                 }
                             }
                         }
-                        for (int j = 0; j < 10; j++) 
+                        for (int secoes = 0; secoes < 10; secoes++) 
                         {
-                            for (int k = 0; k < 10; k++) 
+                            for (int assentos = 0; assentos < 10; assentos++) 
                             {
-                                if (platBOcupado[i][j][k])
+                                if (platBOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[1]++;
                                     receitaPorPeca[1] += precoplatB;
                                 }
                             }
                         }
-                        for (int j = 0; j < 5; j++) 
+                        for (int secoes = 0; secoes < 5; secoes++) 
                         {
-                            for (int k = 0; k < 10; k++) 
+                            for (int assentos = 0; assentos < 10; assentos++) 
                             {
-                                if (camarotesOcupado[i][j][k])
+                                if (camarotesOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[1]++;
                                     receitaPorPeca[1] += precoCamarote;
                                 }
                             }
                         }
-                        for (int j = 0; j < 6; j++) 
+                        for (int secoes = 0; secoes < 6; secoes++) 
                         {
-                            for (int k = 0; k < 5; k++) 
+                            for (int assentos = 0; assentos < 5; assentos++) 
                             {
-                                if (frisasOcupado[i][j][k])
+                                if (frisasOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[1]++;
                                     receitaPorPeca[1] += precoFrisa;
                                 }
                             }
                         }
-                        for (int j = 0; j < 10; j++) 
+                        for (int secoes = 0; secoes < 10; secoes++) 
                         {
-                            for (int k = 0; k < 5; k++) 
+                            for (int assentos = 0; assentos < 5; assentos++) 
                             {
-                                if (balcaoNobreOcupado[i][j][k])
+                                if (balcaoNobreOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[1]++;
                                     receitaPorPeca[1] += precoBalcaonobre;
@@ -493,57 +506,57 @@ public class PIMDosCria {
                     }
             
                     // Peça 3 (horários 3, 6, 9)
-                    if(i == 2 || i == 5 || i == 8)
+                    if(horarios == 2 || horarios == 5 || horarios == 8)
                     {
-                        for (int j = 0; j < 5; j++)
+                        for (int secoes = 0; secoes < 5; secoes++)
                         {
-                            for (int k = 0; k < 5; k++)
+                            for (int assentos = 0; assentos < 5; assentos++)
                             {
-                                if (platAOcupado[i][j][k])
+                                if (platAOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[2]++;
                                     receitaPorPeca[2] += precoplatA;
                                 }
                             }
                         }
-                        for (int j = 0; j < 10; j++) 
+                        for (int secoes = 0; secoes < 10; secoes++) 
                         {
-                            for (int k = 0; k < 10; k++) 
+                            for (int assentos = 0; assentos < 10; assentos++) 
                             {
-                                if (platBOcupado[i][j][k])
+                                if (platBOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[2]++;
                                     receitaPorPeca[2] += precoplatB;
                                 }
                             }
                         }
-                        for (int j = 0; j < 5; j++) 
+                        for (int secoes = 0; secoes < 5; secoes++) 
                         {
-                            for (int k = 0; k < 10; k++) 
+                            for (int assentos = 0; assentos < 10; assentos++) 
                             {
-                                if (camarotesOcupado[i][j][k])
+                                if (camarotesOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[2]++;
                                     receitaPorPeca[2] += precoCamarote;
                                 }
                             }
                         }
-                        for (int j = 0; j < 6; j++) 
+                        for (int secoes = 0; secoes < 6; secoes++) 
                         {
-                            for (int k = 0; k < 5; k++) 
+                            for (int assentos = 0; assentos < 5; assentos++) 
                             {
-                                if (frisasOcupado[i][j][k])
+                                if (frisasOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[2]++;
                                     receitaPorPeca[2] += precoFrisa;
                                 }
                             }
                         }
-                        for (int j = 0; j < 10; j++) 
+                        for (int secoes = 0; secoes < 10; secoes++) 
                         {
-                            for (int k = 0; k < 5; k++) 
+                            for (int assentos = 0; assentos < 5; assentos++) 
                             {
-                                if (balcaoNobreOcupado[i][j][k])
+                                if (balcaoNobreOcupado[horarios][secoes][assentos])
                                 {
                                     vendasPorPeca[2]++;
                                     receitaPorPeca[2] += precoBalcaonobre;
@@ -554,11 +567,11 @@ public class PIMDosCria {
                 }
             
                 // Determinar a peça mais vendida
-                for (int i = 1; i < 3; i++) 
+                for (int peca = 1; peca < 3; peca++) 
                 {
-                    if (vendasPorPeca[i] > vendasPorPeca[maisVendida]) 
+                    if (vendasPorPeca[peca] > vendasPorPeca[maisVendida]) 
                     {
-                        maisVendida = i;
+                        maisVendida = peca;
                     }
                 }
             
@@ -574,10 +587,35 @@ public class PIMDosCria {
                 menuPrincipal = true;
                 // Encerrar a exibição de estatísticas
             }
+            
             while(imprimir)
             {
+                System.out.println("Digite o CPF para imprimir os ingressos:");
+                cpfParaImprimir = ler.nextLine();
+                cpfParaImprimir = cpfParaImprimir.replace(".", "").replace("-", "");
+                encontrouIngresso = false;
+
+                for (int i = 0; i < compraCount; i++) {
+                    if (cpfs[i].equals(cpfParaImprimir)) {
+                        System.out.println("Ingresso: " + compras[i]);
+                        encontrouIngresso = true;
+                    }
+                }
+
+                if (!encontrouIngresso) {
+                    System.out.println("Nenhum ingresso encontrado para este CPF.");
+                }
+
+                System.out.println("Deseja imprimir ingressos para outro CPF? (s/n)");
+                String resposta = ler.nextLine();
+                if (resposta.equalsIgnoreCase("n")) {
+                    imprimir = false;
+                    menuPrincipal = true;
+                }
                 
             }
+
+
         }
     }    
 }
