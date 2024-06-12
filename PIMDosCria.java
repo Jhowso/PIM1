@@ -277,7 +277,7 @@ public class ProjetoIntegrador {
                                                         camarotesOcupado[horarioInt - 1][camaroteEscolhido][posicaoEscolhida] = true;
                                                         System.out.println("Assento reservado com sucesso!");
                                                         cpfs[contadorCompra] = cpf;
-                                                        compras[contadorCompra] = "Camarote " + (camaroteEscolhido+1) + " Assento " + assentoCamarote + " - Horário " + horarioInt;
+                                                        compras[contadorCompra] = "Camarote " + (camaroteEscolhido+1) + " - Assento " + assentoCamarote + " - Horário " + horarioInt;
                                                         contadorCompra++;
                                                         comprar = false;
                                                         menuPrincipal = true;
@@ -320,7 +320,7 @@ public class ProjetoIntegrador {
                                                         frisasOcupado[horarioInt - 1][frisaEscolhida][posicaoFrisa] = true;
                                                         System.out.println("Assento reservado com sucesso!");
                                                         cpfs[contadorCompra] = cpf;
-                                                        compras[contadorCompra] = "Frisa " + (frisaEscolhida + 1) + " Assento " + assentoFrisa + " - Horário " + horarioInt;
+                                                        compras[contadorCompra] = "Frisa " + (frisaEscolhida + 1) + " - Assento " + assentoFrisa + " - Horário " + horarioInt;
                                                         contadorCompra++;
                                                         menuPrincipal = true;
                                                         comprar = false;
