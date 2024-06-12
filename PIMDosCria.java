@@ -509,7 +509,8 @@ public class ProjetoIntegrador {
                     System.out.println();
                 
                     for (int i = 0; i < 3; i++) {
-                        System.out.println("Lucro médio da Peça " + (i + 1) + ": R$" + lucroMedioPorPeca[i]);
+                        System.out.print("Lucro médio da Peça " + (i + 1) + ": R$ ");
+                        System.out.printf("%.2f%n",lucroMedioPorPeca[i]);
                     }
                     System.out.println();
                     estatistica = false;
