@@ -1,12 +1,13 @@
 package pim1;
 import java.util.Scanner;
-public class PIMDosCria {
+public class ProjetoIntegrador {
         public static void main(String[] args) {
     Scanner ler = new Scanner(System.in);
+    double lucroMedioPorPeca [] = new double[3], receitaPorPeca [] = new double[3], receitaPorSessao [] = new double[9];
     String cpfParaImprimir, cpf = "0" , cpfs[] = new String [10], compras[] = new String[10], opcao, horario, secao, frisaString, assentoA, assentoB, assentoCamarote, assentoFrisa, assentoBalcao, camaroteString;
     boolean encontrouIngresso, cpfInvalido = true, menuPrincipal = true, comprar = false, opcaoInvalida = false, sair = false, estatistica = false, imprimir = false, platAOcupado[][][] = new boolean [9][5][5], platBOcupado[][][] = new boolean[9][10][10], camarotesOcupado[][][] = new boolean[9][5][10], frisasOcupado[][][] = new boolean[9][6][5], balcaoNobreOcupado[][][] = new boolean[9][10][5];
-    int compraCount = 0, horarios = 0, num, maisVendida = 0, precoplatA = 40, precoplatB = 60, precoCamarote = 80, precoFrisa = 120, precoBalcaonobre = 250,totalVendido = 0, totalDisponivel = 0, secaoInt, assentoAint, assentoBint, assentoCamaroteint, assentoFrisaint, assentoBalcaoint, contador = 1, horarioInt, camaroteInt, frisaInt, colunaA, linhaA, linhaB, colunaB, camaroteEscolhido, posicaoEscolhida, posicaoFrisa, frisaEscolhida, linhaBalcao, colunaBalcao;
-    int pesos1 [] = {10, 9, 8, 7, 6, 5, 4, 3, 2}, pesos2 [] = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2}, vendasPorPeca [] = new int[3], receitaPorPeca [] = new int[3], platA [][][] = new int [9][5][5], platB [][][] = new int[9][10][10], frisas [][][] = new int [9][6][5], camarotes [][][] = new int[9][5][10], balcaoNobre [][][] = new int[9][10][5];
+    int vendasPorSessao [] = new int[9], menosVendida = 0, contadorCompra = 0, horarios = 0, num, maisVendida = 0, precoplatA = 40, precoplatB = 60, precoCamarote = 80, precoFrisa = 120, precoBalcaonobre = 250,totalVendido = 0, totalDisponivel = 0, secaoInt, assentoAint, assentoBint, assentoCamaroteint, assentoFrisaint, assentoBalcaoint, contador = 1, horarioInt, camaroteInt, frisaInt, colunaA, linhaA, linhaB, colunaB, camaroteEscolhido, posicaoEscolhida, posicaoFrisa, frisaEscolhida, linhaBalcao, colunaBalcao;
+    int pesos1 [] = {10, 9, 8, 7, 6, 5, 4, 3, 2}, pesos2 [] = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2}, vendasPorPeca [] = new int[3], platA [][][] = new int [9][5][5], platB [][][] = new int[9][10][10], frisas [][][] = new int [9][6][5], camarotes [][][] = new int[9][5][10], balcaoNobre [][][] = new int[9][10][5];
     
 
       // Preenche a matriz 5x5 platA com elementos de 1 à 25, em 5 fileiras e 5 colunas e as exibe no final
@@ -128,7 +129,7 @@ public class PIMDosCria {
                 
                 while(menuPrincipal)
                 {
-                
+                    // Exibe menu principal
                     System.out.printf("Selecione uma opção:\n1. Comprar ingresso. \n2. Imprimir ingresso. \n3. Estatística de Vendas.\n4. Sair do programa\n");
                     opcao = ler.nextLine();
                     switch(opcao.toLowerCase())
@@ -168,12 +169,14 @@ public class PIMDosCria {
                     }
 
                 while (comprar) {
+                    // Exibe o menu para selecionar as peças por horários, sendo 3 de manhã, 3 à tarde e 3 à noite
                     System.out.printf("Escolha o horário de sua preferência:\nManhã:\n1. Peça 1 - 08:00\n2. Peça 2 - 09:30\n3. Peça 3 - 11:00\nTarde:\n4. Peça 1 - 13:00\n5. Peça 2 - 15:30\n6. Peça 3 - 17:00\nNoite:\n7. Peça 1 - 18:30\n8. Peça 2 - 20:00\n9. Peça 3 - 21:30\n");
                     do {
                         horario = ler.nextLine();
                         horarioInt = Integer.parseInt(horario);
                         if (horarioInt >= 1 && horarioInt <= 9) {
                             opcaoInvalida = false;
+                            // Exibe menu de seções/áreas do teatro, e submenus caso a escolha seja os camarotes ou as frisas.
                             System.out.printf("Escolha sua seção de preferência:\n1. Plateia A: R$ 40,00\n2. Plateia B: R$ 60,00\n3. Camarote: R$ 80,00\n4. Frisa: R$ 120,00\n5. Balcão Nobre: R$ 250,00\n");
                             do {
                                 secao = ler.nextLine();
@@ -200,9 +203,9 @@ public class PIMDosCria {
                                                 } else {
                                                     platAOcupado[horarioInt - 1][linhaA][colunaA] = true;
                                                     System.out.println("Assento reservado com sucesso!");
-                                                    cpfs[compraCount] = cpf;
-                                                    compras[compraCount] = "Plateia A - Assento " + assentoA + " - Horário " + horarioInt;
-                                                    compraCount++;
+                                                    cpfs[contadorCompra] = cpf;
+                                                    compras[contadorCompra] = "Plateia A - Assento " + assentoA + " - Horário " + horarioInt;
+                                                    contadorCompra++;
                                                     comprar = false;
                                                     menuPrincipal = true;
                                                 }
@@ -234,9 +237,9 @@ public class PIMDosCria {
                                                 } else {
                                                     platBOcupado[horarioInt - 1][linhaB][colunaB] = true;
                                                     System.out.println("Assento reservado com sucesso!");
-                                                    cpfs[compraCount] = cpf;
-                                                    compras[compraCount] = "Plateia B - Assento " + assentoB + " - Horário " + horarioInt;
-                                                    compraCount++;
+                                                    cpfs[contadorCompra] = cpf;
+                                                    compras[contadorCompra] = "Plateia B - Assento " + assentoB + " - Horário " + horarioInt;
+                                                    contadorCompra++;
                                                     comprar = false;
                                                     menuPrincipal = true;
                                                 }
@@ -251,6 +254,7 @@ public class PIMDosCria {
                                         System.out.println("Você escolheu Camarote.");
                                         System.out.println("Camarotes disponíveis:");
                                         for (int camarote = 0; camarote < 5; camarote++) {
+                                            System.out.print("Camarote " + (camarote+1) + ": ");
                                             for (int posicao = 0; posicao < 10; posicao++) {
                                                 System.out.printf("%2d ", camarotes[horarioInt - 1][camarote][posicao]);
                                             }
@@ -272,9 +276,9 @@ public class PIMDosCria {
                                                     } else {
                                                         camarotesOcupado[horarioInt - 1][camaroteEscolhido][posicaoEscolhida] = true;
                                                         System.out.println("Assento reservado com sucesso!");
-                                                        cpfs[compraCount] = cpf;
-                                                        compras[compraCount] = "Camarote " + (camaroteEscolhido+1) + "Assento " + assentoCamarote + " - Horário " + horarioInt;
-                                                        compraCount++;
+                                                        cpfs[contadorCompra] = cpf;
+                                                        compras[contadorCompra] = "Camarote " + (camaroteEscolhido+1) + " Assento " + assentoCamarote + " - Horário " + horarioInt;
+                                                        contadorCompra++;
                                                         comprar = false;
                                                         menuPrincipal = true;
                                                     }
@@ -293,6 +297,7 @@ public class PIMDosCria {
                                         System.out.println("Você escolheu Frisa.");
                                         System.out.println("Frisas disponíveis:");
                                         for (int frisa = 0; frisa < 6; frisa++) {
+                                            System.out.println("Frisa " + (frisa+1) + ": ");
                                             for (int posicao = 0; posicao < 5; posicao++) {
                                                 System.out.printf("%2d ", frisas[horarioInt - 1][frisa][posicao]);
                                             }
@@ -314,9 +319,9 @@ public class PIMDosCria {
                                                     } else {
                                                         frisasOcupado[horarioInt - 1][frisaEscolhida][posicaoFrisa] = true;
                                                         System.out.println("Assento reservado com sucesso!");
-                                                        cpfs[compraCount] = cpf;
-                                                        compras[compraCount] = "Frisa " + (frisaEscolhida + 1) + "Assento " + assentoFrisa + " - Horário " + horarioInt;
-                                                        compraCount++;
+                                                        cpfs[contadorCompra] = cpf;
+                                                        compras[contadorCompra] = "Frisa " + (frisaEscolhida + 1) + " Assento " + assentoFrisa + " - Horário " + horarioInt;
+                                                        contadorCompra++;
                                                         menuPrincipal = true;
                                                         comprar = false;
                                                     }
@@ -352,9 +357,9 @@ public class PIMDosCria {
                                                 } else {
                                                     balcaoNobreOcupado[horarioInt - 1][linhaBalcao][colunaBalcao] = true;
                                                     System.out.println("Assento reservado com sucesso!");
-                                                    cpfs[compraCount] = cpf;
-                                                    compras[compraCount] = "Balcão Nobre - Assento " + assentoBalcao + " - Horário " + horarioInt;
-                                                    compraCount++;
+                                                    cpfs[contadorCompra] = cpf;
+                                                    compras[contadorCompra] = "Balcão Nobre - Assento " + assentoBalcao + " - Horário " + horarioInt;
+                                                    contadorCompra++;
                                                     menuPrincipal = true;
                                                     comprar = false;
                                                 }
@@ -379,243 +384,160 @@ public class PIMDosCria {
                 }
 
 
-                while (estatistica)
-                 {
-            
-                // Somar vendas e receitas de cada peça
-                for (horarios = 0; horarios < 9; horarios++) 
-                {
-                    // Peça 1 (horários 1, 4, 7)
-                    if (horarios == 0 || horarios == 3 || horarios == 6) 
-                    {
-                        for (int secoes = 0; secoes < 5; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++) 
-                            {
-                                if (platAOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[0]++;
-                                    receitaPorPeca[0] += precoplatA;
+                while (estatistica) {
+                
+                    // Somar vendas e receitas de cada peça
+                    for (horarios = 0; horarios < 9; horarios++) {
+                        for (int secoes = 0; secoes < 5; secoes++) {
+                            for (int assentos = 0; assentos < 5; assentos++) {
+                                if (platAOcupado[horarios][secoes][assentos]) {
+                                    vendasPorPeca[horarios % 3]++;
+                                    receitaPorPeca[horarios % 3] += precoplatA;
+                                    vendasPorSessao[horarios]++;
+                                    receitaPorSessao[horarios] += precoplatA;
                                 }
                             }
                         }
-                        for (int secoes = 0; secoes < 10; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 10; assentos++) 
-                            {
-                                if (platBOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[0]++;
-                                    receitaPorPeca[0] += precoplatB;
+                        for (int secoes = 0; secoes < 10; secoes++) {
+                            for (int assentos = 0; assentos < 10; assentos++) {
+                                if (platBOcupado[horarios][secoes][assentos]) {
+                                    vendasPorPeca[horarios % 3]++;
+                                    receitaPorPeca[horarios % 3] += precoplatB;
+                                    vendasPorSessao[horarios]++;
+                                    receitaPorSessao[horarios] += precoplatB;
                                 }
                             }
                         }
-                        for (int secoes = 0; secoes < 5; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 10; assentos++) 
-                            {
-                                if (camarotesOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[0]++;
-                                    receitaPorPeca[0] += precoCamarote;
+                        for (int secoes = 0; secoes < 5; secoes++) {
+                            for (int assentos = 0; assentos < 10; assentos++) {
+                                if (camarotesOcupado[horarios][secoes][assentos]) {
+                                    vendasPorPeca[horarios % 3]++;
+                                    receitaPorPeca[horarios % 3] += precoCamarote;
+                                    vendasPorSessao[horarios]++;
+                                    receitaPorSessao[horarios] += precoCamarote;
                                 }
                             }
                         }
-                        for (int secoes = 0; secoes < 6; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++) 
-                            {
-                                if (frisasOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[0]++;
-                                    receitaPorPeca[0] += precoFrisa;
+                        for (int secoes = 0; secoes < 6; secoes++) {
+                            for (int assentos = 0; assentos < 5; assentos++) {
+                                if (frisasOcupado[horarios][secoes][assentos]) {
+                                    vendasPorPeca[horarios % 3]++;
+                                    receitaPorPeca[horarios % 3] += precoFrisa;
+                                    vendasPorSessao[horarios]++;
+                                    receitaPorSessao[horarios] += precoFrisa;
                                 }
                             }
                         }
-                        for (int secoes = 0; secoes < 10; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++) 
-                            {
-                                if (balcaoNobreOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[0]++;
-                                    receitaPorPeca[0] += precoBalcaonobre;
+                        for (int secoes = 0; secoes < 10; secoes++) {
+                            for (int assentos = 0; assentos < 5; assentos++) {
+                                if (balcaoNobreOcupado[horarios][secoes][assentos]) {
+                                    vendasPorPeca[horarios % 3]++;
+                                    receitaPorPeca[horarios % 3] += precoBalcaonobre;
+                                    vendasPorSessao[horarios]++;
+                                    receitaPorSessao[horarios] += precoBalcaonobre;
                                 }
                             }
                         }
                     }
-            
-                    // Peça 2 (horários 2, 5, 8)
-                    if (horarios == 1 || horarios == 4 || horarios == 7) 
-                    {
-                        for (int secoes = 0; secoes < 5; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++) 
-                            {
-                                if (platAOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[1]++;
-                                    receitaPorPeca[1] += precoplatA;
-                                }
-                            }
+                
+                    // Determinar a peça mais e menos vendida
+                    maisVendida = 0;
+                    menosVendida = 0;
+                    for (int peca = 1; peca < 3; peca++) {
+                        if (vendasPorPeca[peca] > vendasPorPeca[maisVendida]) {
+                            maisVendida = peca;
                         }
-                        for (int secoes = 0; secoes < 10; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 10; assentos++) 
-                            {
-                                if (platBOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[1]++;
-                                    receitaPorPeca[1] += precoplatB;
-                                }
-                            }
-                        }
-                        for (int secoes = 0; secoes < 5; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 10; assentos++) 
-                            {
-                                if (camarotesOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[1]++;
-                                    receitaPorPeca[1] += precoCamarote;
-                                }
-                            }
-                        }
-                        for (int secoes = 0; secoes < 6; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++) 
-                            {
-                                if (frisasOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[1]++;
-                                    receitaPorPeca[1] += precoFrisa;
-                                }
-                            }
-                        }
-                        for (int secoes = 0; secoes < 10; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++) 
-                            {
-                                if (balcaoNobreOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[1]++;
-                                    receitaPorPeca[1] += precoBalcaonobre;
-                                }
-                            }
+                        if (vendasPorPeca[peca] < vendasPorPeca[menosVendida]) {
+                            menosVendida = peca;
                         }
                     }
-            
-                    // Peça 3 (horários 3, 6, 9)
-                    if(horarios == 2 || horarios == 5 || horarios == 8)
-                    {
-                        for (int secoes = 0; secoes < 5; secoes++)
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++)
-                            {
-                                if (platAOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[2]++;
-                                    receitaPorPeca[2] += precoplatA;
-                                }
-                            }
+                
+                    // Determinar a peça mais e menos lucrativa
+                    int maisLucrativa = 0;
+                    int menosLucrativa = 0;
+                    for (int peca = 1; peca < 3; peca++) {
+                        if (receitaPorPeca[peca] > receitaPorPeca[maisLucrativa]) {
+                            maisLucrativa = peca;
                         }
-                        for (int secoes = 0; secoes < 10; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 10; assentos++) 
-                            {
-                                if (platBOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[2]++;
-                                    receitaPorPeca[2] += precoplatB;
-                                }
-                            }
-                        }
-                        for (int secoes = 0; secoes < 5; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 10; assentos++) 
-                            {
-                                if (camarotesOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[2]++;
-                                    receitaPorPeca[2] += precoCamarote;
-                                }
-                            }
-                        }
-                        for (int secoes = 0; secoes < 6; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++) 
-                            {
-                                if (frisasOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[2]++;
-                                    receitaPorPeca[2] += precoFrisa;
-                                }
-                            }
-                        }
-                        for (int secoes = 0; secoes < 10; secoes++) 
-                        {
-                            for (int assentos = 0; assentos < 5; assentos++) 
-                            {
-                                if (balcaoNobreOcupado[horarios][secoes][assentos])
-                                {
-                                    vendasPorPeca[2]++;
-                                    receitaPorPeca[2] += precoBalcaonobre;
-                                }
-                            }
+                        if (receitaPorPeca[peca] < receitaPorPeca[menosLucrativa]) {
+                            menosLucrativa = peca;
                         }
                     }
+                
+                    // Determinar a sessão com maior e menor ocupação de poltronas
+                    int sessaoMaisOcupada = 0;
+                    int sessaoMenosOcupada = 0;
+                    for (int sessao = 1; sessao < 9; sessao++) {
+                        if (vendasPorSessao[sessao] > vendasPorSessao[sessaoMaisOcupada]) {
+                            sessaoMaisOcupada = sessao;
+                        }
+                        if (vendasPorSessao[sessao] < vendasPorSessao[sessaoMenosOcupada]) {
+                            sessaoMenosOcupada = sessao;
+                        }
+                    }
+                
+                    // Determinar a sessão mais e menos lucrativa
+                    int sessaoMaisLucrativa = 0;
+                    int sessaoMenosLucrativa = 0;
+                    for (int sessao = 1; sessao < 9; sessao++) {
+                        if (receitaPorSessao[sessao] > receitaPorSessao[sessaoMaisLucrativa]) {
+                            sessaoMaisLucrativa = sessao;
+                        }
+                        if (receitaPorSessao[sessao] < receitaPorSessao[sessaoMenosLucrativa]) {
+                            sessaoMenosLucrativa = sessao;
+                        }
+                    }
+                
+                    // Calcular lucro médio por peça
+                    for (int peca = 0; peca < 3; peca++) {
+                        lucroMedioPorPeca[peca] = receitaPorPeca[peca] / 3.0;
+                    }
+                
+                    // Exibir estatísticas
+                    System.out.println("Estatísticas de Vendas:");
+                
+                    System.out.println("Peça mais vendida: Peça " + (maisVendida + 1) + " com " + vendasPorPeca[maisVendida] + " ingressos");
+                    System.out.println("Peça mais lucrativa: Peça " + (maisLucrativa + 1) + " com receita de R$" + receitaPorPeca[maisLucrativa]);
+                    System.out.println("Sessão mais ocupada: Sessão " + (sessaoMaisOcupada + 1) + " com " + vendasPorSessao[sessaoMaisOcupada] + " ingressos");
+                    System.out.println("Sessão mais lucrativa: Sessão " + (sessaoMaisLucrativa + 1) + " com receita de R$" + receitaPorSessao[sessaoMaisLucrativa]);
+                    System.out.println();
+                    System.out.println("Peça menos vendida: Peça " + (menosVendida + 1) + " com " + vendasPorPeca[menosVendida] + " ingressos");
+                    System.out.println("Peça menos lucrativa: Peça " + (menosLucrativa + 1) + " com receita de R$" + receitaPorPeca[menosLucrativa]);
+                    System.out.println("Sessão menos ocupada: Sessão " + (sessaoMenosOcupada + 1) + " com " + vendasPorSessao[sessaoMenosOcupada] + " ingressos");
+                    System.out.println("Sessão menos lucrativa: Sessão " + (sessaoMenosLucrativa + 1) + " com receita de R$" + receitaPorSessao[sessaoMenosLucrativa]);
+                    System.out.println();
+                
+                    for (int i = 0; i < 3; i++) {
+                        System.out.println("Lucro médio da Peça " + (i + 1) + ": R$" + lucroMedioPorPeca[i]);
+                    }
+                    System.out.println();
+                    estatistica = false;
+                    menuPrincipal = true;
                 }
-            
-                // Determinar a peça mais vendida
-                for (int peca = 1; peca < 3; peca++) 
-                {
-                    if (vendasPorPeca[peca] > vendasPorPeca[maisVendida]) 
-                    {
-                        maisVendida = peca;
-                    }
-                }
-            
-                // Exibir estatísticas
-                System.out.println("Estatísticas de Vendas:");
-                for (int i = 0; i < 3; i++) 
-                {
-                    System.out.println("Peça " + (i + 1) + " - Vendas: " + vendasPorPeca[i] + " ingressos, Receita: R$" + receitaPorPeca[i]);
-                }
-                System.out.println("A peça mais vendida foi a Peça " + (maisVendida + 1) + " com " + vendasPorPeca[maisVendida] + " ingressos vendidos.");
-            
-                estatistica = false;
-                menuPrincipal = true;
-                // Encerrar a exibição de estatísticas
-            }
+                
             
             while(imprimir)
             {
-                System.out.println("Digite o CPF para imprimir os ingressos:");
-                cpfParaImprimir = ler.nextLine();
-                cpfParaImprimir = cpfParaImprimir.replace(".", "").replace("-", "");
+                cpfParaImprimir = cpf;
                 encontrouIngresso = false;
-
-                for (int i = 0; i < compraCount; i++) {
-                    if (cpfs[i].equals(cpfParaImprimir)) {
+                //Exibe os ingressos comprados no CPF atual
+                for (int i = 0; i < contadorCompra; i++) 
+                {
+                    if (cpfs[i].equals(cpfParaImprimir)) 
+                    {
                         System.out.println("Ingresso: " + compras[i]);
                         encontrouIngresso = true;
                     }
                 }
-
-                if (!encontrouIngresso) {
+                //Se não encontrar nenhum ingresso
+                if (!encontrouIngresso) 
+                {
                     System.out.println("Nenhum ingresso encontrado para este CPF.");
                 }
-
-                System.out.println("Deseja imprimir ingressos para outro CPF? (s/n)");
-                String resposta = ler.nextLine();
-                if (resposta.equalsIgnoreCase("n")) {
                     imprimir = false;
                     menuPrincipal = true;
                 }
                 
             }
-
-
         }
     }    
-}
