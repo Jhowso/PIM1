@@ -6,7 +6,7 @@ public class ProjetoIntegrador {
     double lucroMedioPorPeca [] = new double[3], receitaPorPeca [] = new double[3], receitaPorSessao [] = new double[9];
     String cpfParaImprimir, cpf = "0" , cpfs[] = new String [10], compras[] = new String[10], opcao, horario, secao, frisaString, assentoA, assentoB, assentoCamarote, assentoFrisa, assentoBalcao, camaroteString;
     boolean encontrouIngresso, cpfInvalido = true, menuPrincipal = true, comprar = false, opcaoInvalida = false, sair = false, estatistica = false, imprimir = false, platAOcupado[][][] = new boolean [9][5][5], platBOcupado[][][] = new boolean[9][10][10], camarotesOcupado[][][] = new boolean[9][5][10], frisasOcupado[][][] = new boolean[9][6][5], balcaoNobreOcupado[][][] = new boolean[9][10][5];
-    int vendasPorSessao [] = new int[9], menosVendida = 0, contadorCompra = 0, horarios = 0, num, maisVendida = 0, precoplatA = 40, precoplatB = 60, precoCamarote = 80, precoFrisa = 120, precoBalcaonobre = 250,totalVendido = 0, totalDisponivel = 0, secaoInt, assentoAint, assentoBint, assentoCamaroteint, assentoFrisaint, assentoBalcaoint, contador = 1, horarioInt, camaroteInt, frisaInt, colunaA, linhaA, linhaB, colunaB, camaroteEscolhido, posicaoEscolhida, posicaoFrisa, frisaEscolhida, linhaBalcao, colunaBalcao;
+    int vendasPorSessao [] = new int[9], menosVendida = 0, contadorCompra = 0, horarios = 0, num, maisVendida = 0, precoplatA = 40, precoplatB = 60, precoCamarote = 80, precoFrisa = 120, precoBalcaonobre = 250,totalVendido, totalDisponivel, secaoInt, assentoAint, assentoBint, assentoCamaroteint, assentoFrisaint, assentoBalcaoint, contador = 1, horarioInt, camaroteInt, frisaInt, colunaA, linhaA, linhaB, colunaB, camaroteEscolhido, posicaoEscolhida, posicaoFrisa, frisaEscolhida, linhaBalcao, colunaBalcao;
     int pesos1 [] = {10, 9, 8, 7, 6, 5, 4, 3, 2}, pesos2 [] = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2}, vendasPorPeca [] = new int[3], platA [][][] = new int [9][5][5], platB [][][] = new int[9][10][10], frisas [][][] = new int [9][6][5], camarotes [][][] = new int[9][5][10], balcaoNobre [][][] = new int[9][10][5];
     
 
@@ -162,6 +162,7 @@ public class ProjetoIntegrador {
                     System.out.println("Sair do programa.");
                     sair = true;
                     menuPrincipal = false;
+                    break;
                 default:
                     System.out.println("Opção inválida, favor selecione outra.");
                     opcaoInvalida = true;
@@ -539,5 +540,6 @@ public class ProjetoIntegrador {
                 }
                 
             }
+            ler.close();
         }
     }    
