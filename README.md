@@ -1,2 +1,2 @@
 # PIM1
-PIM Primeiro Semestre - SENAI Fatesg
+Projeto Integrador do 1º Semestre, onde criei um projeto em Java para gerenciar um teatro, em que possuía a compra de ingressos, impressão desses ingressos e estatística de vendas. Fui o desenvolvedor de uma equipe de 3 pessoas, enquanto as outras duas pessoas ficaram responsáveis pela documentação do código. O código é feito todo em programação estruturada, e para ser exibido em console. Não há interface gráfica nem conceitos de OO sendo aplicados.
